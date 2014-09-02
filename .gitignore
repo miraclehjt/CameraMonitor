@@ -26,11 +26,27 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
-
+Icon
 # Thumbnails
 ._*
 
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+bin/R.txt
+gen/com/example/cameramonitor/R.java
+bin/classes/com/example/cameramonitor/test/tograyscale.class
+bin/classes/com/example/cameramonitor/R$style.class
+bin/classes/com/example/cameramonitor/R$string.class
+bin/classes/com/example/cameramonitor/R$layout.class
+*.class
+bin/R.txt
+bin/*.*
+gen/com/example/cameramonitor/R.java
+bin/AndroidManifest.xml
+bin/AndroidManifest.xml
+bin/AndroidManifest.xml
+bin/CameraMonitor.apk
+bin/AndroidManifest.xml
+bin/AndroidManifest.xml
