@@ -1,4 +1,4 @@
-package com.example.cameramonitor;
+package com.example.cameramonitor.utils;
 
 import java.io.IOException;
 
