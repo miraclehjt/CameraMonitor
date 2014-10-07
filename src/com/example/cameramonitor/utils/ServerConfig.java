@@ -25,5 +25,12 @@ public class ServerConfig {
 	public static final String EXTRA_BYTEARRAYB = "extra_arrayb";
 	
 
+	public static final String INVADE_ALARM = "有不明物体入侵监控区域，请及时确认";
+	
+	public static final String ANDYSHAREPREFERENCES = "andyshareprefreences";
+	public static final String EMAILUSED_FLAG = "emailused_flag";
+	public static final String PHONEUSED_FLAG = "phoneused_flag";
+	public static final String EMAILACCOUNT = "email_account";
+	public static final String PHONE_NUM = "phone_num";
 
 }

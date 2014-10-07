@@ -6,24 +6,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.Contacts;
-import android.util.Log;
+import android.telephony.SmsManager;
 
 
 public class Utils {
@@ -48,7 +41,9 @@ public class Utils {
 	 * @param title
 	 * @param body
 	 */
-	public static final void sendMess(String to, String title, String body) {
+	public static final void sendMess(String to, String body) {
+		SmsManager smsMgs = SmsManager.getDefault();
+		smsMgs.sendTextMessage(to, null, body, null, null);
 
 	}
 
@@ -116,7 +111,7 @@ public class Utils {
 					.getExternalStorageDirectory() : context
 					.getFilesDir();
 
-			File logfile = new File(filepath, "/GProject");
+			File logfile = new File(filepath, "/Good Monitor");
 			path = logfile.getAbsolutePath() + "/log.txt";
 			
 			if (!logfile.exists()) {

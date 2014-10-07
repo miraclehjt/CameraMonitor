@@ -13,6 +13,8 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 
+import com.example.cameramonitor.utils.Utils.writeLog;
+
 /**
  * ProcessService.service
  * 
@@ -25,8 +27,9 @@ public class ProcessService extends Service {
 	private Servicehandler mServiceHandler;
 	private Looper mHandlerLooper;
 	private ImagePHash mImagePHash = null;
-	private Bitmap b1 = null;
 	boolean flag = false;
+	private Monitor_API mMonitor = new Monitor_API(ProcessService.this);
+	private writeLog mLogWriter = null;
 
 	private final class Servicehandler extends Handler {
 		public Servicehandler(Looper looper) {
@@ -51,12 +54,24 @@ public class ProcessService extends Service {
 
 			int distance = mImagePHash.getImagePHash(b1, b2);
 			if (distance > 10) {
-				// 图像phash>5,图片就应该不是同一张图
-				// alarm user
+				// 图像phash>10, 图片就应该不是同一张图
+				// InvadeAlarm
+				
 				Log.i("processService", "not the same pic,dis "+ distance);
-
+				mLogWriter = new writeLog(ProcessService.this);
+				mLogWriter.printLn("have invade ,dis ->"+ distance);
+				mLogWriter.close();
+				mLogWriter = null;
+				
+				mMonitor.InvadeAlarm(ProcessService.this);
+				
 			} else {
 				Log.i("processService", "the same pics,dis "+ distance);
+				
+				mLogWriter = new writeLog(ProcessService.this);
+				mLogWriter.printLn("no invade ,dis ->"+ distance);
+				mLogWriter.close();
+				mLogWriter = null;
 			}
 			mImagePHash = null;
 			stopSelf(msg.arg1);
@@ -106,5 +121,6 @@ public class ProcessService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 	}
+
 
 }

@@ -12,6 +12,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -22,21 +24,26 @@ import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.example.cameramonitor.utils.Monitor_API;
 import com.example.cameramonitor.utils.ProcessService;
 import com.example.cameramonitor.utils.ServerConfig;
+import com.example.cameramonitor.utils.Utils.writeLog;
 
 public class MainActivity extends Activity {
 
@@ -49,8 +56,9 @@ public class MainActivity extends Activity {
 
 	private boolean mPicTokenFlag = false;
 	private byte[] mPrePicByte = null;
+	private writeLog mLogWriter = null;
 
-	private Monitor_API mAPI = Monitor_API.getInstance(MainActivity.this);
+
 
 	private Handler mHandler = new Handler();
 
@@ -121,6 +129,11 @@ public class MainActivity extends Activity {
 
 	private Camera.AutoFocusCallback mAutoFocusCallback;
 	private ToggleButton mTgButtom;
+	private CheckBox mEmailCBox;
+	private CheckBox mPhoneCBox;
+	private SharedPreferences sp;
+	private EditText mEmailTV;
+	private EditText mPhoneTV;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,29 +143,11 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_main);
-
-		mTgButtom = (ToggleButton) findViewById(R.id.toggleButton1);
-		mTgButtom.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				if (isChecked) {
-					// 开始监视
-					Log.i("toogle buttom ", "checked");
-					mStartMonitorFlag = true;
-					StartMonitor();
-				} else {
-					// 停止监视
-					mStartMonitorFlag = false;
-					Log.i("toogle buttom ", "not checked");
-					StopMonitor();
-
-				}
-
-			}
-		});
-
+		sp = this.getSharedPreferences(ServerConfig.ANDYSHAREPREFERENCES, Context.MODE_PRIVATE);
+		
+		initView();
+		
+		
 		// 方向事件监听器
 		// http://blog.csdn.net/xiaona1047985204/article/details/14162115
 		myOrientationEventListener = new OrientationEventListener(this) {
@@ -199,17 +194,7 @@ public class MainActivity extends Activity {
 		preview.addView(mPreview);
 		// preview.setVisibility(View.INVISIBLE);
 
-		// Add a listener to the Capture button
-		Button captureButton = (Button) findViewById(R.id.button1);
-		captureButton.setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-
-				// get an image from the camera
-				mCamera.takePicture(null, null, mPicture);
-			}
-		});
 	}
 
 	/**
@@ -253,6 +238,164 @@ public class MainActivity extends Activity {
 		camera.setDisplayOrientation(result);
 	}
 
+	private void initView(){
+		// Add a listener to the Capture button
+		Button captureButton = (Button) findViewById(R.id.button1);
+		captureButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				// get an image from the camera
+				mCamera.takePicture(null, null, mPicture);
+			}
+		});
+		
+		
+		mTgButtom = (ToggleButton) findViewById(R.id.toggleButton1);
+		mTgButtom.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				if (isChecked) {
+					// 开始监视
+					Log.i("toogle buttom ", "checked");
+					mStartMonitorFlag = true;
+					StartMonitor();
+				} else {
+					// 停止监视
+					mStartMonitorFlag = false;
+					Log.i("toogle buttom ", "not checked");
+					StopMonitor();
+
+				}
+
+			}
+		});
+
+		//清除缓存
+		findViewById(R.id.btn_cashclear).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		mEmailTV = (EditText) findViewById(R.id.Edt_report_mail);
+		mPhoneTV = (EditText) findViewById(R.id.Edt_report_phone);
+		mEmailTV.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(mEmailCBox.isChecked()){
+					Editor editor = sp.edit();
+					editor.putString(ServerConfig.EMAILACCOUNT, mEmailTV.getText().toString());
+					editor.commit();
+				}
+				
+			}
+		});
+		mPhoneTV.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				
+				if(mPhoneCBox.isChecked()){
+					Editor editor = sp.edit();
+					editor.putString(ServerConfig.PHONE_NUM, mPhoneTV.getText().toString());
+					editor.commit();
+				}
+				
+			
+				
+			}
+		});
+		
+		mEmailCBox = (CheckBox) findViewById(R.id.cbox_emailcheck);
+		mEmailCBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				
+				Editor editor = sp.edit();
+				if(isChecked){
+					String email = mEmailTV.getText().toString();
+					if(email != null){
+						editor.putBoolean(ServerConfig.EMAILUSED_FLAG, true);
+						editor.putString(ServerConfig.EMAILACCOUNT, email);
+					}
+					
+				}else{
+					editor.putBoolean(ServerConfig.EMAILUSED_FLAG, false);
+				}
+				editor.commit();
+				
+			}
+		});
+		mPhoneCBox = (CheckBox) findViewById(R.id.cbox_phonecheck);
+		mPhoneCBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				Editor editor = sp.edit();
+				if(isChecked){
+					String phonenum = mPhoneTV.getText().toString();
+					if(phonenum != null){
+						editor.putBoolean(ServerConfig.PHONEUSED_FLAG, true);
+						editor.putString(ServerConfig.PHONE_NUM, phonenum);
+					}
+					
+				}else{
+					editor.putBoolean(ServerConfig.PHONEUSED_FLAG, false);
+				}
+				editor.commit();
+			}
+		});
+		findViewById(R.id.tv_readme).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, ReadMeActivity.class);
+				startActivity(intent);
+				
+			}
+		});
+		
+	}
+	
 	@Override
 	protected void onResume() {
 
@@ -354,6 +497,11 @@ public class MainActivity extends Activity {
 			}
 		};
 		mHandler.postDelayed(task, 1000);
+		mLogWriter = new writeLog(MainActivity.this);
+		mLogWriter.printLn("开始监视");
+		mLogWriter.close();
+		mLogWriter = null;
+		
 
 	}
 
@@ -362,6 +510,11 @@ public class MainActivity extends Activity {
 		mStartMonitorFlag = false;
 		mPicTokenFlag = false;
 		mPrePicByte = null;
+		
+		mLogWriter = new writeLog(MainActivity.this);
+		mLogWriter.printLn("停止监视");
+		mLogWriter.close();
+		mLogWriter = null;
 
 	}
 }
