@@ -18,126 +18,123 @@
         </FrameLayout>
     </LinearLayout>
 
-  <Button
-      android:id="@+id/button1"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:visibility="gone"
-      android:text="take pic" />
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="take pic"
+        android:visibility="gone" />
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:padding="5dp" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:padding="5dp" >
 
-      <TextView
-          android:id="@+id/textView1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="报警邮箱：" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报警邮箱：" />
 
-      <EditText
-          android:id="@+id/Edt_report_mail"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:ems="10" >
+        <EditText
+            android:id="@+id/Edt_report_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
 
-          <requestFocus />
-      </EditText>
+        </EditText>
 
-      <CheckBox
-          android:id="@+id/cbox_emailcheck"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+        <CheckBox
+            android:id="@+id/cbox_emailcheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:padding="5dp" >
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:padding="5dp" >
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报警手机号：" />
 
-      <TextView
-          android:id="@+id/TextView01"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="报警手机号：" />
+        <EditText
+            android:id="@+id/Edt_report_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" />
 
-      <EditText
-          android:id="@+id/Edt_report_phone"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:ems="10" />
+        <CheckBox
+            android:id="@+id/cbox_phonecheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-      <CheckBox
-          android:id="@+id/cbox_phonecheck"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-  </LinearLayout>
+        <ToggleButton
+            android:id="@+id/toggleButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ToggleButton"
+            android:textOff="开始监视"
+            android:textOn="停止监视" />
+    </LinearLayout>
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:gravity="center"
-      android:orientation="horizontal" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-      <ToggleButton
-          android:id="@+id/toggleButton1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textOn="停止监视"
-          android:textOff="开始监视"
-          android:text="ToggleButton" />
+        <Button
+            android:id="@+id/btn_cashclear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清除缓存"
+            android:visibility="gone" />
+    </LinearLayout>
 
-  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical" >
+        <TextView
+            android:id="@+id/tv_readme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#33B5E5"
+            android:text="READ ME" />
+    </LinearLayout>
 
-      <Button
-          android:id="@+id/btn_cashclear"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:visibility="gone"
-          android:text="清除缓存" />
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-  </LinearLayout>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="5dp" >
-
-      <TextView
-          android:id="@+id/tv_readme"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:background="#33B5E5"
-          android:text="READ ME" />
-
-  </LinearLayout>
-
-  <ScrollView
-      android:id="@+id/scrollView1"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" >
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical"
-          android:padding="5dp" >
-
-      </LinearLayout>
-  </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp" >
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

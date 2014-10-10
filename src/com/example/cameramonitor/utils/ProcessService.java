@@ -67,11 +67,7 @@ public class ProcessService extends Service {
 				
 			} else {
 				Log.i("processService", "the same pics,dis "+ distance);
-				
-				mLogWriter = new writeLog(ProcessService.this);
-				mLogWriter.printLn("no invade ,dis ->"+ distance);
-				mLogWriter.close();
-				mLogWriter = null;
+
 			}
 			mImagePHash = null;
 			stopSelf(msg.arg1);

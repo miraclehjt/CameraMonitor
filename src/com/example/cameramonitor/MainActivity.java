@@ -239,6 +239,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void initView(){
+		
 		// Add a listener to the Capture button
 		Button captureButton = (Button) findViewById(R.id.button1);
 		captureButton.setOnClickListener(new View.OnClickListener() {
@@ -286,6 +287,24 @@ public class MainActivity extends Activity {
 		
 		mEmailTV = (EditText) findViewById(R.id.Edt_report_mail);
 		mPhoneTV = (EditText) findViewById(R.id.Edt_report_phone);
+		mEmailCBox = (CheckBox) findViewById(R.id.cbox_emailcheck);
+		mPhoneCBox = (CheckBox) findViewById(R.id.cbox_phonecheck);
+		
+		
+		//获取sharepreferences数据
+		boolean eflag = sp.getBoolean(ServerConfig.EMAILUSED_FLAG, false);
+		if(eflag){
+			mEmailCBox.setChecked(true);
+		}
+		mEmailTV.setText(sp.getString(ServerConfig.EMAILACCOUNT, "").toString());
+		
+		boolean pflag = sp.getBoolean(ServerConfig.PHONEUSED_FLAG, false);
+		if(pflag){
+			mPhoneCBox.setChecked(true);
+		}
+		mPhoneTV.setText(sp.getString(ServerConfig.PHONE_NUM, "").toString());
+		
+		
 		mEmailTV.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -340,7 +359,7 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		mEmailCBox = (CheckBox) findViewById(R.id.cbox_emailcheck);
+		
 		mEmailCBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -362,7 +381,7 @@ public class MainActivity extends Activity {
 				
 			}
 		});
-		mPhoneCBox = (CheckBox) findViewById(R.id.cbox_phonecheck);
+		
 		mPhoneCBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -382,6 +401,11 @@ public class MainActivity extends Activity {
 				editor.commit();
 			}
 		});
+		
+
+		
+		
+		
 		findViewById(R.id.tv_readme).setOnClickListener(new OnClickListener() {
 			
 			@Override
